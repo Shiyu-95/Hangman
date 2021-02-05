@@ -1,0 +1,66 @@
+import random as r
+
+word = ["python", 'java', 'kotlin', 'javascript']  #список слов
+
+
+alphabet = [i for i in "abcdefghijgklmnopqrstuvwxyz"]
+
+
+
+print("H A N G M A N")
+print('Type "play" to play the game, "exit" to quit: ')
+menu = input()
+
+while menu == "play" and menu != exit:
+    ourchoice = r.choice(word)  #берем из списка выше рандомное слово
+    our_list = list(ourchoice)
+    guessed_words = []
+    new_word = list("-" * len(ourchoice))
+    times = 8 #кол-во попыток
+    while times != 0:
+        print()
+        print("".join(new_word))
+        if "".join(new_word) == ourchoice:
+            print("You guessed the word! \nYou survived!")
+            break
+        print("Input a letter: >")
+        hischoice = input()
+        
+        if len(hischoice) != 1:
+            print("You should input a single letter")
+            continue
+        
+        if hischoice not in alphabet:
+            print("Please enter a lowercase English letter")
+            continue
+        
+        
+        if hischoice in guessed_words:
+            print("You've already guessed this letter")
+            continue
+        guessed_words.append(hischoice)
+        
+        
+        if hischoice not in ourchoice:
+            print("That letter doesn't appear in the word")
+            
+            times-=1
+        elif hischoice in new_word:
+            print("No improvements")
+            times-=1
+            continue
+        else:
+            for i in our_list: 
+                if i == hischoice:
+                    s = our_list.index(i)
+                    ch = new_word.pop(s)
+                    new_word.insert(s, i)
+                    if i == "_":
+                        continue
+                    our_list.pop(s)
+                    our_list.insert(s, '_')
+    if times == 0:
+        print("You lost!")
+    print()
+    print('Type "play" to play the game, "exit" to quit: ')
+    menu = input()
